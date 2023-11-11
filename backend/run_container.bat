@@ -1,0 +1,1 @@
+docker run --add-host 127.0.0.1:0.0.0.0 -p 5432:5432 -p 80:80 -e DB_USER=postgres -e DB_PASSWORD=kulgasimsim -e SERVER_ENV=LOCAL_DOCKER api-server:latest
