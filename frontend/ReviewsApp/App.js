@@ -10,7 +10,7 @@ export default function App() {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    axiosInstance.get("/todos").then((response) => setTodos(response.data));
+    axiosInstance.get("/reviews").then((response) => setTodos(response.data));
   }, []);
 
   console.log(todos);

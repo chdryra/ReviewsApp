@@ -1,7 +1,3 @@
-# idea
 .idea/
-
-# Byte-compiled / optimized / DLL files
 __pycache__/
-
-backend/run_container.bat
+env/
