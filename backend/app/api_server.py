@@ -8,6 +8,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from server_config import ServerConfig, get_db_uri
 from routers import reviews, users, root
 
+import firebase_admin
+from firebase_admin import credentials
+
 
 def run_server(config: ServerConfig) -> None:
     app = FastAPI()
@@ -23,6 +26,9 @@ def run_server(config: ServerConfig) -> None:
     app.include_router(users.router)
     app.include_router(reviews.router)
     app.include_router(root.router)
+
+    cred = credentials.Certificate("secrets/firebase-service-account.json")
+    firebase_admin.initialize_app(cred)
 
     uvicorn.run(
         app, host=config.ip, port=config.port, log_level="info", proxy_headers=True

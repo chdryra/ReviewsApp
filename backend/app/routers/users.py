@@ -1,4 +1,6 @@
 from fastapi import APIRouter
+from pydantic import BaseModel
+from firebase_admin import auth
 
 PREFIX = "/users"
 
@@ -9,8 +11,22 @@ router = APIRouter(
 )
 
 
-@router.get("/", tags=["users"])
-async def read_users():
+class SignupInfo(BaseModel):
+    email: str
+    password: str
+    display_name: str
+
+
+@router.post("/signup", tags=["users"])
+async def signup_user(info: SignupInfo):
+    # user = auth.create_user(
+    #     email=info.email,
+    #     password=info.password,
+    #     display_name=info.display_name,
+    #     disabled=False,
+    # )
+    print("Sucessfully created new user: {0}".format(user.uid))
+
     return [{"username": "Riz"}, {"username": "Rizwan"}]
 
 
