@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
-import { auth } from "../firebase";
+import { firebaseAuth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    signOut(auth)
+    signOut(firebaseAuth)
       .then(() => {
         navigate("/login");
         console.log("Signed out successfully");
@@ -19,7 +19,7 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(firebaseAuth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User

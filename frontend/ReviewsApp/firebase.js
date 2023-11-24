@@ -1,6 +1,5 @@
 // Import the functions you need from the SDKs you need
 
-import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
@@ -20,6 +19,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-export const auth = getAuth(app);
+export const firebaseApp = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
+export const firebaseAuth = getAuth(firebaseApp);
+const firebaseui = require("firebaseui");
+// Initialize the FirebaseUI Widget using Firebase.
+export const firebaseUi = new firebaseui.auth.AuthUI(firebaseAuth);

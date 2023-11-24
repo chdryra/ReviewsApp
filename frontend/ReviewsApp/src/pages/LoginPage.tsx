@@ -2,6 +2,8 @@ import { Login, LoginInfo } from "../components/Login";
 import { NavLink, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
+import LoginFirebase from "../components/LoginFirebase";
+
 const LoginPage = () => {
   const navigate = useNavigate();
 
@@ -11,7 +13,7 @@ const LoginPage = () => {
 
   return (
     <div>
-      <Login onLogin={loginUser} />
+      <LoginFirebase  />
       <p className="text-sm text-white text-center">
         No account yet? <NavLink to="/signup">Sign up</NavLink>
       </p>
