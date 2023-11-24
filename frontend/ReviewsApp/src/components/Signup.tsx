@@ -1,10 +1,5 @@
+import { SignupInfo } from "../client";
 import { useState } from "react";
-
-export type SignupInfo = {
-  email: String,
-  password: String
-  displayName: String
-}
 
 export function Signup({ onSignup }: { onSignup: (info: SignupInfo) => void }) {
   const [email, setEmail] = useState("");
@@ -20,7 +15,7 @@ export function Signup({ onSignup }: { onSignup: (info: SignupInfo) => void }) {
         onSignup({
             email,
             password: password1,
-            displayName
+            display_name: displayName
           });
     } else {
         alert("Passwords don't match")

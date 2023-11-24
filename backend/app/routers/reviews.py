@@ -29,12 +29,7 @@ DUMMY_DATA = {
 }
 
 PREFIX = "/reviews"
-
-router = APIRouter(
-    prefix=PREFIX,
-    tags=["reviews"],
-    responses={404: {"description": "Not found"}},
-)
+router = APIRouter(prefix=PREFIX, tags=[PREFIX[1:]])
 
 
 @router.get("/")
@@ -44,13 +39,9 @@ async def read_reviews(db: Annotated[PostgresDb, Depends(get_db)]):
 
 @router.get("/{review_id}")
 async def read_review(review_id: str, db: Annotated[PostgresDb, Depends(get_db)]):
-    return {review_id: "This is a review"}
+    return {review_id: "This is an old review"}
 
 
-@router.put(
-    "/{review_id}",
-    tags=["custom"],
-    responses={403: {"description": "Operation forbidden"}},
-)
-async def update_note(review_id: str, db: Annotated[PostgresDb, Depends(get_db)]):
-    return []
+@router.put("/{review_id}")
+async def update_review(review_id: str, db: Annotated[PostgresDb, Depends(get_db)]):
+    return {review_id: "This is a new review"}

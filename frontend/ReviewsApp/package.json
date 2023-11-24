@@ -2,12 +2,17 @@
   "name": "reviewsapp",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "generate-client": "openapi --input http://127.0.0.1:5000/openapi.json --output ./src/client --client axios"
+    "generate-api": "openapi-generator-cli generate -i http://127.0.0.1:5000/openapi.json -g typescript-axios -o ./src/client"
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",

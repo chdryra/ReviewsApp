@@ -6,12 +6,7 @@ from server_config import get_db
 from sql.sqlutils import PostgresDb
 
 PREFIX = ""
-
-router = APIRouter(
-    prefix=PREFIX,
-    tags=["root"],
-    responses={404: {"description": "Not found"}},
-)
+router = APIRouter(prefix=PREFIX, tags=["root"])
 
 
 @router.get("/")

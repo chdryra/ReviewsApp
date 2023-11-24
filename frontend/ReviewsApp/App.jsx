@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { StyleSheet, Text, View } from "react-native";
 
 import HomePage from "./src/pages/HomePage";
 import LoginPage from "./src/pages/LoginPage";
 import ReviewsPage from "./src/pages/ReviewsPage";
 import SignupPage from "./src/pages/SignupPage";
+import { StyleSheet } from "react-native";
 
 export default function App() {
   return (

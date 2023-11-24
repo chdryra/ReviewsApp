@@ -1,12 +1,19 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { Signup, SignupInfo } from "../components/Signup";
+
+import { AxiosResponse } from "axios";
+import { Signup } from "../components/Signup";
+import { SignupInfo } from "../client";
+import { UsersApi } from "../config/apiConfig";
 
 const SignupPage = () => {
   const navigate = useNavigate();
 
   const signupUser = (info: SignupInfo) => {
-    alert(`${info.email}: ${info.password}: ${info.displayName}`)
+    UsersApi.signupUserUsersSignupPost(info)
+    .then((response: AxiosResponse<void, any>) => {
+      console.log(response.data)
+    })  
   };
 
   return (
