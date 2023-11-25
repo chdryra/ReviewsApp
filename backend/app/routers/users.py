@@ -22,6 +22,7 @@ async def signup_user(info: SignupInfo):
         display_name=info.display_name,
         disabled=False,
     )
+    
     print("Sucessfully created new user")
 
     return {"user": user}
