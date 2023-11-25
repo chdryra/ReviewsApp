@@ -1,11 +1,9 @@
 import { Login, LoginInfo } from "../components/Login";
-import { NavLink, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
 import LoginFirebase from "../components/LoginFirebase";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
 
   const loginUser = (info: LoginInfo) => {
     alert(`${info.email}: ${info.password}`)
@@ -14,9 +12,6 @@ const LoginPage = () => {
   return (
     <div>
       <LoginFirebase  />
-      <p className="text-sm text-white text-center">
-        No account yet? <NavLink to="/signup">Sign up</NavLink>
-      </p>
     </div>
   );
 };

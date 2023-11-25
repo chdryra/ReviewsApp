@@ -1,25 +1,21 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-import HomePage from "./src/pages/HomePage";
-import LoginPage from "./src/pages/LoginPage";
-import ReviewsPage from "./src/pages/ReviewsPage";
-import SignupPage from "./src/pages/SignupPage";
+import HomePage from "./src/screens/HomeScreen";
+import LoginPage from "./src/screens/LoginScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import ReviewsPage from "./src/screens/ReviewsScreen";
+import { RootStack } from "./types/NavigationTypes";
+import SignupPage from "./src/screens/SignupScreen";
 import { StyleSheet } from "react-native";
 
-export default function App() {
+export function App() {
   return (
-    <BrowserRouter>
-      <div>
-        <section>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/reviews" element={<ReviewsPage />} />
-          </Routes>
-        </section>
-      </div>
-    </BrowserRouter>
+    <NavigationContainer>
+      <RootStack.Navigator initialRouteName="Home">
+      <RootStack.Screen name="Home" component={HomePage} />
+        <RootStack.Screen name="Login" component={LoginPage} />
+        <RootStack.Screen name="Signup" component={SignupPage} />
+        <RootStack.Screen name="Reviews" component={ReviewsPage} />
+      </RootStack.Navigator>
+    </NavigationContainer>
   );
 }
 
