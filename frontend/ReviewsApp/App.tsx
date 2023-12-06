@@ -1,22 +1,41 @@
-import HomePage from "./src/screens/HomeScreen";
-import LoginPage from "./src/screens/LoginScreen";
-import { NavigationContainer } from "@react-navigation/native";
-import ReviewsPage from "./src/screens/ReviewsScreen";
-import { RootStack } from "./types/NavigationTypes";
-import SignupPage from "./src/screens/SignupScreen";
-import { StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
 
-export function App() {
-  return (
-    <NavigationContainer>
-      <RootStack.Navigator initialRouteName="Home">
-      <RootStack.Screen name="Home" component={HomePage} />
-        <RootStack.Screen name="Login" component={LoginPage} />
-        <RootStack.Screen name="Signup" component={SignupPage} />
-        <RootStack.Screen name="Reviews" component={ReviewsPage} />
-      </RootStack.Navigator>
-    </NavigationContainer>
-  );
+import HomeScreen from "./src/screens/HomeScreen";
+import LoginScreen from "./src/screens/LoginScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { RootStack } from "./types/NavigationTypes";
+import { StyleSheet } from "react-native";
+import { firebaseAuth } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
+
+export default function App() {
+  const [isSignedIn, setIsSignedIn] = useState(false)
+
+  useEffect(() => {
+    onAuthStateChanged(firebaseAuth, (user) => {
+      if (user) {
+        setIsSignedIn(true)
+      } else {
+        setIsSignedIn(false)
+      }
+    });
+  }, []);
+
+  const protectedRoutes = (<NavigationContainer>
+    <RootStack.Navigator initialRouteName="Home">
+      <RootStack.Screen name="Home" component={HomeScreen} />
+    </RootStack.Navigator>
+  </NavigationContainer>
+  )
+
+  const signInRoutes = (<NavigationContainer>
+    <RootStack.Navigator initialRouteName="Login">
+      <RootStack.Screen name="Login" component={LoginScreen} />
+    </RootStack.Navigator>
+  </NavigationContainer>
+  )
+
+  return isSignedIn ? protectedRoutes : signInRoutes
 }
 
 const styles = StyleSheet.create({

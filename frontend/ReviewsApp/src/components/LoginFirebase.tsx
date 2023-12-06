@@ -4,10 +4,8 @@ import * as firebaseui from 'firebaseui'
 
 import { EmailAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 
-import firebase from 'firebase/compat/app';
 import { firebaseUi } from '../../firebase';
 import { useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
 
 export default function LoginFirebase() {
   const uiConfig = {

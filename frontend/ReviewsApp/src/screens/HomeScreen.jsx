@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-
 import { firebaseAuth } from "../../firebase";
+import { signOut } from "firebase/auth";
 
 const HomePage = () => {
   const handleLogout = () => {
@@ -14,24 +12,13 @@ const HomePage = () => {
       });
   };
 
-  useEffect(() => {
-    onAuthStateChanged(firebaseAuth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        console.log("user", user);
-      } else {
-        console.log("user is logged out");
-      }
-    });
-  }, []);
-
   return (
-      <nav>
-        <p>Welcome Home</p>
-        <div>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      </nav>
+    <nav>
+      <p>Welcome Home</p>
+      <div>
+        <button onClick={handleLogout}>Logout</button>
+      </div>
+    </nav>
   );
 };
 
