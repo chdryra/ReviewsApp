@@ -21,21 +21,20 @@ export default function App() {
     });
   }, []);
 
-  const protectedRoutes = (<NavigationContainer>
-    <RootStack.Navigator initialRouteName="Home">
-      <RootStack.Screen name="Home" component={HomeScreen} />
-    </RootStack.Navigator>
-  </NavigationContainer>
-  )
+  const protectedScreens = <RootStack.Screen name="Home" component={HomeScreen} />
+  const signInScreens = <RootStack.Screen name="Login" component={LoginScreen} />
+  const screens = isSignedIn ?
+    protectedScreens
+    :
+    signInScreens
 
-  const signInRoutes = (<NavigationContainer>
-    <RootStack.Navigator initialRouteName="Login">
-      <RootStack.Screen name="Login" component={LoginScreen} />
-    </RootStack.Navigator>
-  </NavigationContainer>
+  return (
+    <NavigationContainer>
+      <RootStack.Navigator initialRouteName="Login">
+        {screens}
+      </RootStack.Navigator>
+    </NavigationContainer>
   )
-
-  return isSignedIn ? protectedRoutes : signInRoutes
 }
 
 const styles = StyleSheet.create({

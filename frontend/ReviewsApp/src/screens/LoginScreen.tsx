@@ -9,15 +9,6 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(firebaseAuth, user => {
-            if(user) {
-                navigation.replace("Home")
-            }
-        })
-        return unsubscribe
-    }, [])
-
     const handleSignUp = () => {
         createUserWithEmailAndPassword(firebaseAuth, email, password).then((creds: UserCredential) => {
             const user = creds.user;
