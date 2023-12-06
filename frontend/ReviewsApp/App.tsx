@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { RootStack } from "./types/NavigationTypes";
 import { SignInData } from "./src/types/AuthTypes";
 import { StyleSheet } from "react-native";
+import { UsersApi } from "./src/config/apiConfig";
 import { firebaseAuth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -25,11 +26,17 @@ export default function App() {
   const authContext = useMemo(
     () => ({
       signIn: async (data: SignInData) => {
-        dispatch({ type: AuthActionType.SignIn, token: data.userId });
+        UsersApi.signinUserUsersSigninPost({uid: data.userId}).then((response) => {
+          console.log(response)
+          dispatch({ type: AuthActionType.SignIn, token: data.userId });
+        })
       },
       signOut: () => dispatch({ type: AuthActionType.SignOut }),
       signUp: async (data: SignInData) => {
-        dispatch({ type: AuthActionType.SignUp, token: data.userId });
+        UsersApi.signupUserUsersSignupPost({uid: data.userId}).then((response) => {
+          console.log(response)
+          dispatch({ type: AuthActionType.SignUp, token: data.userId });
+        })
       },
     }),
     []
@@ -43,7 +50,7 @@ export default function App() {
         setIsSignedIn(false)
       }
     });
-  }, [authState.userToken]);
+  }, [authState]);
 
   const protectedScreens = <RootStack.Screen name="Home" component={HomeScreen} />
   const signInScreens = <RootStack.Screen name="Login" component={LoginScreen} />

@@ -7,24 +7,25 @@ PREFIX = "/users"
 router = APIRouter(prefix=PREFIX, tags=[PREFIX[1:]])
 
 
-class SignupInfo(BaseModel):
-    email: str
-    password: str
-    display_name: str
+class SignUpInfo(BaseModel):
+    uid: str
+
+
+class SignInInfo(BaseModel):
+    uid: str
 
 
 @router.post("/signup")
-async def signup_user(info: SignupInfo):
-    user = auth.create_user(
-        uid=uuid.uuid4(),
-        email=info.email,
-        password=info.password,
-        display_name=info.display_name,
-        disabled=False,
-    )
-    
-    print("Sucessfully created new user")
+async def signup_user(info: SignUpInfo):
+    user = auth.get_user(info.uid)
+    print("Successfully created user: {0}".format(user))
+    return {"user": user}
 
+
+@router.post("/signin")
+async def signin_user(info: SignInInfo):
+    user = auth.get_user(info.uid)
+    print("Successfully fetched user: {0}".format(user))
     return {"user": user}
 
 

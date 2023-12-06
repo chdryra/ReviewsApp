@@ -39,27 +39,28 @@ export interface HTTPValidationError {
 /**
  * 
  * @export
- * @interface SignupInfo
+ * @interface SignInInfo
  */
-export interface SignupInfo {
+export interface SignInInfo {
     /**
      * 
      * @type {string}
-     * @memberof SignupInfo
+     * @memberof SignInInfo
      */
-    'email': string;
+    'uid': string;
+}
+/**
+ * 
+ * @export
+ * @interface SignUpInfo
+ */
+export interface SignUpInfo {
     /**
      * 
      * @type {string}
-     * @memberof SignupInfo
+     * @memberof SignUpInfo
      */
-    'password': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SignupInfo
-     */
-    'display_name': string;
+    'uid': string;
 }
 /**
  * 
@@ -476,14 +477,50 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @summary Signup User
-         * @param {SignupInfo} signupInfo 
+         * @summary Signin User
+         * @param {SignInInfo} signInInfo 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signupUserUsersSignupPost: async (signupInfo: SignupInfo, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'signupInfo' is not null or undefined
-            assertParamExists('signupUserUsersSignupPost', 'signupInfo', signupInfo)
+        signinUserUsersSigninPost: async (signInInfo: SignInInfo, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'signInInfo' is not null or undefined
+            assertParamExists('signinUserUsersSigninPost', 'signInInfo', signInInfo)
+            const localVarPath = `/users/signin`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(signInInfo, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Signup User
+         * @param {SignUpInfo} signUpInfo 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        signupUserUsersSignupPost: async (signUpInfo: SignUpInfo, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'signUpInfo' is not null or undefined
+            assertParamExists('signupUserUsersSignupPost', 'signUpInfo', signUpInfo)
             const localVarPath = `/users/signup`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -503,7 +540,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(signupInfo, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(signUpInfo, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -535,13 +572,26 @@ export const UsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Signup User
-         * @param {SignupInfo} signupInfo 
+         * @summary Signin User
+         * @param {SignInInfo} signInInfo 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async signupUserUsersSignupPost(signupInfo: SignupInfo, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.signupUserUsersSignupPost(signupInfo, options);
+        async signinUserUsersSigninPost(signInInfo: SignInInfo, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.signinUserUsersSigninPost(signInInfo, options);
+            const index = configuration?.serverIndex ?? 0;
+            const operationBasePath = operationServerMap['UsersApi.signinUserUsersSigninPost']?.[index]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Signup User
+         * @param {SignUpInfo} signUpInfo 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async signupUserUsersSignupPost(signUpInfo: SignUpInfo, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.signupUserUsersSignupPost(signUpInfo, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['UsersApi.signupUserUsersSignupPost']?.[index]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
@@ -568,13 +618,23 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
-         * @summary Signup User
-         * @param {SignupInfo} signupInfo 
+         * @summary Signin User
+         * @param {SignInInfo} signInInfo 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        signupUserUsersSignupPost(signupInfo: SignupInfo, options?: any): AxiosPromise<void> {
-            return localVarFp.signupUserUsersSignupPost(signupInfo, options).then((request) => request(axios, basePath));
+        signinUserUsersSigninPost(signInInfo: SignInInfo, options?: any): AxiosPromise<void> {
+            return localVarFp.signinUserUsersSigninPost(signInInfo, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Signup User
+         * @param {SignUpInfo} signUpInfo 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        signupUserUsersSignupPost(signUpInfo: SignUpInfo, options?: any): AxiosPromise<void> {
+            return localVarFp.signupUserUsersSignupPost(signUpInfo, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -600,14 +660,26 @@ export class UsersApi extends BaseAPI {
 
     /**
      * 
-     * @summary Signup User
-     * @param {SignupInfo} signupInfo 
+     * @summary Signin User
+     * @param {SignInInfo} signInInfo 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public signupUserUsersSignupPost(signupInfo: SignupInfo, options?: AxiosRequestConfig) {
-        return UsersApiFp(this.configuration).signupUserUsersSignupPost(signupInfo, options).then((request) => request(this.axios, this.basePath));
+    public signinUserUsersSigninPost(signInInfo: SignInInfo, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).signinUserUsersSigninPost(signInInfo, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Signup User
+     * @param {SignUpInfo} signUpInfo 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public signupUserUsersSignupPost(signUpInfo: SignUpInfo, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).signupUserUsersSignupPost(signUpInfo, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
