@@ -1,11 +1,15 @@
+import { AuthContext } from "../store/AuthContext";
 import { firebaseAuth } from "../../firebase";
-import { signOut } from "firebase/auth";
+import { signOut as firebaseSignOut } from "firebase/auth";
+import { useContext } from "react";
 
 const HomePage = () => {
+  const { signOut } = useContext(AuthContext);
+
   const handleLogout = () => {
-    signOut(firebaseAuth)
+    firebaseSignOut(firebaseAuth)
       .then(() => {
-        console.log("Signed out successfully");
+        signOut();
       })
       .catch((error) => {
         alert(error);

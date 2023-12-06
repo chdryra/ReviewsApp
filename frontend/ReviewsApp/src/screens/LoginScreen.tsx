@@ -1,26 +1,28 @@
 import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { UserCredential, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import React, { useContext, useState } from 'react'
+import { UserCredential, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 
-import { LoginScreenProps } from '../types/NavigationTypes'
+import { AuthContext } from '../store/AuthContext'
 import { firebaseAuth } from '../../firebase'
 
-const LoginScreen = ({ navigation }: LoginScreenProps) => {
+const LoginScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const { signIn, signUp } = useContext(AuthContext);
 
     const handleSignUp = () => {
         createUserWithEmailAndPassword(firebaseAuth, email, password).then((creds: UserCredential) => {
-            const user = creds.user;
-            console.log("Registered with " + user.email)
+            signUp({userId: creds.user.uid})
+        }).catch((error) => {
+          alert(error);
         })
     }
 
     const handleLogin = () => {
         signInWithEmailAndPassword(firebaseAuth, email, password).then((creds: UserCredential) => {
-            const user = creds.user;
-            console.log("Logged in with " + user.email)
-            // navigation.navigate("Home")
+            signIn({userId: creds.user.uid})
+         }).catch((error) => {
+          alert(error);
         })
     }
 
