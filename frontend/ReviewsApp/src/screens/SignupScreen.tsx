@@ -1,12 +1,11 @@
-import React from "react";
-
 import { AxiosResponse } from "axios";
+import React from "react";
+import { SignUpInfo } from "../client";
 import { Signup } from "../components/Signup";
-import { SignupInfo } from "../client";
 import { UsersApi } from "../config/apiConfig";
 
-const SignupPage = () => {
-  const signupUser = (info: SignupInfo) => {
+export default function SignupPage() {
+  const signupUser = (info: SignUpInfo) => {
     UsersApi.signupUserUsersSignupPost(info)
     .then((response: AxiosResponse<void, any>) => {
       console.log(response.data)
@@ -19,5 +18,3 @@ const SignupPage = () => {
     </div>
   );
 };
-
-export default SignupPage;

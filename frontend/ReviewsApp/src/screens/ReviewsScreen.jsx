@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 
+import BackendConfig from './../config/backendConfig';
 import ReviewsList from "../components/ReviewsList";
-import axios from "axios";
 
-const axiosInstance = axios.create({ baseURL: "http://127.0.0.1:5000" });
-
-function ReviewsPage() {
+export default function ReviewsPage() {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    axiosInstance.get("/reviews").then((response) => setReviews(response.data.reviews));
+    BackendConfig.axiosClient.get("/reviews").then((response) => setReviews(response.data.reviews));
   }, []);
 
   return (
@@ -19,5 +17,3 @@ function ReviewsPage() {
     </div>
   );
 }
-
-export default ReviewsPage;

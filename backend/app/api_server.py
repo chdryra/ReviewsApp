@@ -5,7 +5,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from server_config import ServerConfig, get_db_uri
+from server_config import ServerConfig
 from routers import reviews, users, root
 
 import firebase_admin
@@ -41,5 +41,4 @@ if __name__ == "__main__":
     parser.add_argument("-p", "--port", default=5000, required=False)
     args = parser.parse_args()
 
-    db_uri = get_db_uri()
     run_server(ServerConfig(ip=args.ip, port=int(args.port)))
